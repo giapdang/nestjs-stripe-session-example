@@ -3,9 +3,15 @@ import { ConfigModule } from '@nestjs/config';
 import * as Joi from '@hapi/joi';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import StripeService from './stripe/stripe.service';
+import { UsersModule } from './users/users.module';
+import { AuthModule } from './auth/auth.module';
+import { StripeModule } from './stripe/stripe.module';
 import ProductController from './product.controller';
 import CheckoutController from './checkout.controller';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { DataSource } from 'typeorm';
+import { InvoiceModule } from './invoice/invoice.module';
+import { PaymentModule } from './payment/payment.module';
 
 @Module({
   imports: [
@@ -15,8 +21,20 @@ import CheckoutController from './checkout.controller';
         STRIPE_CURRENCY: Joi.string(),
       }),
     }),
+    TypeOrmModule.forRoot({
+      type: 'sqlite',
+      database: 'commerceDB.sqlite',
+      autoLoadEntities: true,
+    }),
+    UsersModule,
+    AuthModule,
+    StripeModule,
+    InvoiceModule,
+    PaymentModule,
   ],
   controllers: [AppController, ProductController, CheckoutController],
-  providers: [AppService, StripeService],
+  providers: [AppService],
 })
-export class AppModule {}
+export class AppModule {
+  constructor(private dataSource: DataSource) {}
+}
