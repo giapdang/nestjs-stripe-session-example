@@ -9,9 +9,9 @@ import User from './user.entity';
 @Injectable()
 export class UsersService {
   constructor(
-    @Inject(forwardRef(() => StripeService))
     @InjectRepository(User)
     private usersRepository: Repository<User>,
+    @Inject(forwardRef(() => StripeService))
     private stripeService: StripeService,
   ) {}
 

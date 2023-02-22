@@ -15,13 +15,12 @@ export default class StripeService {
   private stripe: Stripe;
 
   constructor(
-    @Inject(forwardRef(() => UsersService))
     private readonly configService: ConfigService,
     private readonly invoiceService: InvoiceService,
     private readonly paymentService: PaymentService,
+    @Inject(forwardRef(() => UsersService))
     private readonly userService: UsersService,
-  )
-  {
+  ) {
     this.stripe = new Stripe(configService.get('STRIPE_SECRET_KEY'), {
       apiVersion: '2022-11-15',
     });
@@ -98,14 +97,14 @@ export default class StripeService {
 
   private getUserFromObject = async (object) => {
     const { customer } = object;
-    // return this.userService.findOneByStripeCustomer(customer);
+    return this.userService.findOneByStripeCustomer(customer);
   };
 
   private triggerCreatePayment = async (object) => {
     const { id } = object;
     const user = await this.getUserFromObject(object);
     const paymentDetail = await this.stripe.checkout.sessions.retrieve(id);
-    // this.paymentService.createPayment(user.id, paymentDetail);
+    this.paymentService.createPayment(user.id, paymentDetail);
   };
 
   private triggerSubscriptionPayment = async (object) => {
@@ -117,7 +116,7 @@ export default class StripeService {
     const user = await this.getUserFromObject(object);
     const invoiceDetail = await this.stripe.invoices.retrieve(id);
     console.log(`invoiceDetail`, invoiceDetail);
-    // this.invoiceService.createInvoice(user.id, invoiceDetail);
+    this.invoiceService.createInvoice(user.id, invoiceDetail);
   };
 
   private triggerCheckoutSessionCompleted = async (object) => {
@@ -126,7 +125,7 @@ export default class StripeService {
     const checkoutDetail = await this.stripe.checkout.sessions.listLineItems(
       id,
     );
-    // this.paymentService.createPayment(user.id, checkoutDetail);
+    this.paymentService.createPayment(user.id, checkoutDetail);
   };
 
   private constructWebhookEvent = (body, sig) => {
