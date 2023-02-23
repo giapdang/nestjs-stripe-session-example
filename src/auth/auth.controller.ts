@@ -1,6 +1,8 @@
 import { Controller, Post, UseGuards, Request, Body } from '@nestjs/common';
+import CreateUserDto from 'src/users/dto/createUser.dto';
 import { AuthService } from './auth.service';
 import { LocalAuthGuard } from './local-auth.guard';
+import { ApiResponse } from '@nestjs/swagger';
 
 @Controller('auth')
 export class AuthController {
@@ -13,7 +15,12 @@ export class AuthController {
   }
 
   @Post('register')
-  async register(@Body() body) {
-    return this.authService.register(body);
+  @ApiResponse({
+    status: 201,
+    description: 'The record has been successfully created.',
+  })
+  @ApiResponse({ status: 403, description: 'Forbidden.' })
+  async register(@Body() user: CreateUserDto) {
+    return this.authService.register(user);
   }
 }
