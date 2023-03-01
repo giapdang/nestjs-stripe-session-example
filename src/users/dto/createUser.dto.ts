@@ -1,18 +1,20 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsString, IsNotEmpty } from 'class-validator';
+import { IsString, IsNotEmpty, MinLength } from 'class-validator';
 
 export class CreateUserDto {
   @IsString()
   @IsNotEmpty()
+  @MinLength(8, { message: 'at least 8 characters' })
   @ApiProperty({
     description: 'Email',
-    minimum: 5,
+    minimum: 8,
     default: 'nghiadd@example.com',
   })
   email: string;
 
   @IsString()
   @IsNotEmpty()
+  @MinLength(5, { message: 'at least 5 characters' })
   @ApiProperty({
     description: 'Name',
     minimum: 5,
@@ -22,6 +24,7 @@ export class CreateUserDto {
 
   @IsString()
   @IsNotEmpty()
+  @MinLength(8, { message: 'at least 8 characters' })
   @ApiProperty({
     description: 'Password',
     minimum: 8,
