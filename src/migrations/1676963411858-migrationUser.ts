@@ -25,6 +25,10 @@ export class migrationUser1676963411858 implements MigrationInterface {
             name: 'password',
             type: 'varchar',
           },
+          {
+            name: 'stripe_customer_id',
+            type: 'varchar',
+          },
         ],
       }),
       true,
