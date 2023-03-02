@@ -2,11 +2,12 @@ import 'reflect-metadata';
 import { DataSource } from 'typeorm';
 import User from './users/user.entity';
 import * as dotenv from 'dotenv';
+import { join } from 'path';
 
 dotenv.config();
 
 export const AppDataSource = new DataSource({
-  type: 'postgres',
+  type: 'mysql',
   host: process.env.DATABASE_HOST,
   port: parseInt(process.env.DATABASE_PORT),
   username: process.env.DATABASE_USERNAME,
@@ -15,6 +16,6 @@ export const AppDataSource = new DataSource({
   synchronize: true,
   logging: false,
   entities: [User],
-  migrations: ['src/migrations/*.ts'],
+  migrations: [join(__dirname, 'migrations', '*.{ts,js}')],
   subscribers: [],
 });
