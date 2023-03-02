@@ -29,7 +29,13 @@ export class UsersService {
       stripe_customer_id: stripeCustomer.id,
     });
     await this.usersRepository.save(newUser);
-    return newUser;
+
+    return {
+      id: newUser.id,
+      name: newUser.name,
+      email: newUser.email,
+      stripe_customer_id: newUser.stripe_customer_id,
+    };
   }
 
   async findOne(email: string): Promise<User | undefined> {
