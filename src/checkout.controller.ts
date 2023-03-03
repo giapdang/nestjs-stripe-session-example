@@ -6,6 +6,7 @@ import {
   Req,
   UseGuards,
 } from '@nestjs/common';
+import { ApiBearerAuth } from '@nestjs/swagger';
 import { JwtAuthGuard } from './auth/jwt-auth.guard';
 import CheckoutDto from './dto/checkout.dto';
 import StripeService from './stripe/stripe.service';
@@ -18,6 +19,7 @@ export default class CheckoutController {
     private readonly userService: UsersService,
   ) {}
 
+  @ApiBearerAuth('token')
   @UseGuards(JwtAuthGuard)
   @Post()
   async createSession(@Body() products: CheckoutDto, @Req() req) {
