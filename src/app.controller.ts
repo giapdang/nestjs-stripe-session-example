@@ -16,7 +16,7 @@ export class AppController {
   @ApiResponse({ status: 401, description: 'Unauthorized' })
   @UseGuards(JwtAuthGuard)
   @Get('profile')
-  getProfile(@Request() req) {
+  getProfile(@Request() req: { user: object }) {
     return req.user;
   }
 }
