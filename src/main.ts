@@ -6,9 +6,9 @@ import rawBodyMiddleware from './stripe/middlewares/rawBody.middleware';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
-
   const configService = app.get(ConfigService);
 
+  app.setGlobalPrefix('api');
   app.enableCors({
     origin: configService.get('FRONTEND_URL'),
     credentials: true,
