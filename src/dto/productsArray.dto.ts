@@ -6,7 +6,7 @@ export class Product {
   @IsNotEmpty()
   @ApiProperty({
     description: 'Price_id get from Stripe',
-    default: 'price_1MDSgSF4QIiwHAy1G6aG77cQ',
+    example: 'price_1MDSgSF4QIiwHAy1G6aG77cQ',
   })
   price_id: string;
 
@@ -15,7 +15,7 @@ export class Product {
   @ApiProperty({
     description: 'The quantity of the product',
     minimum: 1,
-    default: 1,
+    example: 1,
   })
   quantity: number;
 }
