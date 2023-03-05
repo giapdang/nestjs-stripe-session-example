@@ -1,11 +1,12 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsString, IsNotEmpty, IsNumber } from 'class-validator';
 
-export class CheckoutDto {
+export class Product {
   @IsString()
   @IsNotEmpty()
   @ApiProperty({
     description: 'Price_id get from Stripe',
+    default: 'price_1MDSgSF4QIiwHAy1G6aG77cQ',
   })
   price_id: string;
 
@@ -19,4 +20,7 @@ export class CheckoutDto {
   quantity: number;
 }
 
-export default CheckoutDto;
+export default class ProductsArrayDto {
+  @ApiProperty({ isArray: true, type: Product })
+  public products: Product[];
+}

@@ -8,7 +8,7 @@ import {
 } from '@nestjs/common';
 import { ApiBearerAuth } from '@nestjs/swagger';
 import { JwtAuthGuard } from './auth/jwt-auth.guard';
-import CheckoutDto from './dto/checkout.dto';
+import ProductsArrayDto from './dto/productsArray.dto';
 import CheckoutRequestDto from './dto/checkoutRequest.dto';
 import StripeService from './stripe/stripe.service';
 import { UsersService } from './users/users.service';
@@ -24,7 +24,7 @@ export default class CheckoutController {
   @UseGuards(JwtAuthGuard)
   @Post()
   async createSession(
-    @Body() products: CheckoutDto,
+    @Body() body: ProductsArrayDto,
     @Req() req: CheckoutRequestDto,
   ) {
     const { email } = req.user;
@@ -33,6 +33,6 @@ export default class CheckoutController {
       throw new NotFoundException('User not found!');
     }
     const stripeCustomerId = userInfo.stripe_customer_id;
-    return this.stripeService.createSession(stripeCustomerId, products);
+    return this.stripeService.createSession(stripeCustomerId, body.products);
   }
 }
