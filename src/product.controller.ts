@@ -7,7 +7,7 @@ export default class ProductController {
 
   @Get()
   async getAllProducts() {
-    return await this.stripeService.getAllProducts();
-    // return { data };
+    const products = await this.stripeService.getAllProducts();
+    return products.data;
   }
 }
