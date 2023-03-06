@@ -31,6 +31,15 @@ export class CreateUserDto {
     default: '12345678abc',
   })
   password: string;
+
+  @IsString()
+  @MinLength(6, { message: 'at least 8 characters' })
+  @ApiProperty({
+    description: 'address of user',
+    minimum: 6,
+    example: 'thanh hoa',
+  })
+  address: string;
 }
 
 export default CreateUserDto;

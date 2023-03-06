@@ -16,6 +16,9 @@ class User {
 
   @Column()
   public stripe_customer_id?: string;
+
+  @Column()
+  public address?: string;
 }
 
 export default User;

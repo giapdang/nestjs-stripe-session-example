@@ -35,6 +35,7 @@ export class UsersService {
       name: newUser.name,
       email: newUser.email,
       stripe_customer_id: newUser.stripe_customer_id,
+      address: newUser.address,
     };
   }
 
@@ -48,6 +49,7 @@ export class UsersService {
       id: user.id,
       email: user.email,
       name: user.name,
+      address: user.address,
     };
   }
 
