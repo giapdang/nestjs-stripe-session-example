@@ -19,6 +19,9 @@ class User {
 
   @Column()
   public address?: string;
+
+  @Column()
+  public phone_number: string;
 }
 
 export default User;
