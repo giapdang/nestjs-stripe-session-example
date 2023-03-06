@@ -12,10 +12,10 @@ class User {
   public name: string;
 
   @Column()
-  public password: string;
+  public password?: string;
 
   @Column()
-  public stripe_customer_id: string;
+  public stripe_customer_id?: string;
 }
 
 export default User;

@@ -42,6 +42,15 @@ export class UsersService {
     return this.usersRepository.findOneBy({ email });
   }
 
+  async getUserInfo(email: string): Promise<User | undefined> {
+    const user = await this.usersRepository.findOneBy({ email });
+    return {
+      id: user.id,
+      email: user.email,
+      name: user.name,
+    };
+  }
+
   async findOneByStripeCustomer(customerId: string): Promise<User | undefined> {
     return this.usersRepository.findOneBy({ stripe_customer_id: customerId });
   }

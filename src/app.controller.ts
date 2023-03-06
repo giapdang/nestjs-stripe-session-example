@@ -2,10 +2,14 @@ import { Controller, Get, UseGuards, Request } from '@nestjs/common';
 import { ApiBearerAuth, ApiResponse } from '@nestjs/swagger';
 import { AppService } from './app.service';
 import { JwtAuthGuard } from './auth/jwt-auth.guard';
+import { UsersService } from './users/users.service';
 
 @Controller()
 export class AppController {
-  constructor(private readonly appService: AppService) {}
+  constructor(
+    private readonly appService: AppService,
+    private readonly userService: UsersService,
+  ) {}
 
   @Get()
   getHello(): string {
@@ -16,7 +20,9 @@ export class AppController {
   @ApiResponse({ status: 401, description: 'Unauthorized' })
   @UseGuards(JwtAuthGuard)
   @Get('profile')
-  getProfile(@Request() req: { user: object }) {
-    return req.user;
+  async getProfile(@Request() req: { user: object }) {
+    const user = req.user as { email: string };
+    const userInfo = await this.userService.getUserInfo(user.email);
+    return userInfo;
   }
 }
