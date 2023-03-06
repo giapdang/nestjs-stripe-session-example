@@ -49,6 +49,10 @@ export default class StripeService {
     return this.stripe.products.list();
   };
 
+  public getProductById = (productId) => {
+    return this.stripe.products.retrieve(productId);
+  };
+
   public webhook = (body, sig) => {
     const event = this.constructWebhookEvent(body, sig);
     switch (event.type) {
