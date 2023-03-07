@@ -15,13 +15,18 @@ export class UsersService {
     private stripeService: StripeService,
   ) {}
 
+  saltOrRounds = 10;
+
   async create(userData: CreateUserDto) {
     const stripeCustomer = await this.stripeService.createCustomer(
       userData.name,
       userData.email,
     );
 
-    const hashedPassword = await bcrypt.hash(userData.password, 10);
+    const hashedPassword = await bcrypt.hash(
+      userData.password,
+      this.saltOrRounds,
+    );
 
     const newUser = await this.usersRepository.create({
       ...userData,
