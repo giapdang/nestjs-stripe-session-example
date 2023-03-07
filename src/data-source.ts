@@ -18,4 +18,5 @@ export const AppDataSource = new DataSource({
   entities: [User],
   migrations: [join(__dirname, 'migrations', '*.{ts,js}')],
   subscribers: [],
+  dropSchema: true,
 });

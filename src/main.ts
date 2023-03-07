@@ -3,8 +3,11 @@ import { NestFactory } from '@nestjs/core';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import { AppModule } from './app.module';
 import rawBodyMiddleware from './stripe/middlewares/rawBody.middleware';
+import { createDatabase } from 'typeorm-extension';
 
 async function bootstrap() {
+  await createDatabase({ ifNotExist: true });
+
   const app = await NestFactory.create(AppModule);
   const configService = app.get(ConfigService);
 
