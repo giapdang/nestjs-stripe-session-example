@@ -61,6 +61,18 @@ export default class StripeService {
     });
   };
 
+  public createProduct = (params) => {
+    return this.stripe.products.create({
+      name: params.name,
+      description: params.description,
+      metadata: params.metadata,
+    });
+  };
+
+  public removeProductById = (productId) => {
+    return this.stripe.products.del(productId);
+  };
+
   public webhook = (body, sig) => {
     const event = this.constructWebhookEvent(body, sig);
     switch (event.type) {
