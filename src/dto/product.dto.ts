@@ -1,7 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsString, IsNotEmpty, IsObject } from 'class-validator';
 
-export class UpdateProductDto {
+export class ProductDto {
   @IsString()
   @IsNotEmpty()
   @ApiProperty({
@@ -26,4 +26,4 @@ export class UpdateProductDto {
   metadata: object;
 }
 
-export default UpdateProductDto;
+export default ProductDto;

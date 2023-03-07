@@ -1,7 +1,15 @@
-import { Controller, Get, Body, Put, Param } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Body,
+  Put,
+  Delete,
+  Post,
+  Param,
+} from '@nestjs/common';
 import StripeService from './stripe/stripe.service';
 import ProductDetailDto from './dto/productDetail.dto';
-import UpdateProductDto from './dto/updateProduct.dto';
+import ProductDto from './dto/product.dto';
 
 @Controller('products')
 export default class ProductController {
@@ -13,6 +21,12 @@ export default class ProductController {
     return products.data;
   }
 
+  @Post()
+  async createProduct(@Body() productDto: ProductDto) {
+    const product = await this.stripeService.createProduct(productDto);
+    return product;
+  }
+
   @Get(':productId')
   async findOne(@Param() params: ProductDetailDto) {
     const product = await this.stripeService.getProductById(params.productId);
@@ -22,13 +36,21 @@ export default class ProductController {
   @Put(':productId')
   async update(
     @Param() params: ProductDetailDto,
-    @Body() updateProductDto: UpdateProductDto,
+    @Body() productDto: ProductDto,
   ) {
     const product = await this.stripeService.updateProduct(
       params.productId,
-      updateProductDto,
+      productDto,
     );
 
+    return product;
+  }
+
+  @Delete(':productId')
+  async remove(@Param() params: ProductDetailDto) {
+    const product = await this.stripeService.removeProductById(
+      params.productId,
+    );
     return product;
   }
 }
